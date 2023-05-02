@@ -1,0 +1,30 @@
+.sendMessageContainer{
+    background: #545454;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-left-radius: 7px;
+    padding: 16px;
+    align-items: flex-end;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    max-width: 60%;
+    align-self: flex-end;
+    margin-bottom: 15px;
+}
+.receivedMessageContainer{
+    background: #e8e8e8;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+ 
+    color: #545454;
+    padding: 16px;
+    width: fit-content;
+    word-break: break-word;
+    align-items: flex-end;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    max-width: 60%;
+    margin-bottom: 15px;
+  
+}

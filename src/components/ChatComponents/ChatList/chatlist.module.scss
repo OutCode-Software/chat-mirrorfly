@@ -1,0 +1,53 @@
+.leftSideBar {
+  z-index: 1;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
+  width:300px;
+  box-shadow: 1px 0px 0px 0px rgba(152, 152, 152, 0.69);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .chatListWrapper{
+    border-bottom: 1px solid rgb(236, 236, 236);
+    padding: 8px 10px;
+    background:#ababab;
+    color:#fff;
+    text-align: start;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .chatList {
+    cursor: pointer;
+    text-align: start;
+    &:hover {
+      background-color: rgb(236, 236, 236);
+    }
+  }
+}
+.rightSideChatContainer{
+    height: calc(100vh - 130px);
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+      }
+}
+.navbarChat {
+  box-shadow: 0px 1px 0px 0px rgba(179, 179, 179, 0.69);
+  position: sticky;
+  top: 0;
+}
+.rightSideContainer {
+  height: 100vh;
+  width: calc(100% - 300px);
+  position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
