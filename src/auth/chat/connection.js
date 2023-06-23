@@ -31,7 +31,7 @@ const useInitialize = async () => {
   const initializeObj = {
     apiBaseUrl: baseUrl,
     licenseKey: licenseKey,
-    isTrialLicenseKey: true,
+    // isTrialLicenseKey: true,
     callbackListeners: {
       connectionListener,
       friendsListListener,

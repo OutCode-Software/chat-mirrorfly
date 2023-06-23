@@ -58,6 +58,7 @@ export const LeftSideBar = ({
   };
 
   const { data: recentUser } = useQuery("recentChat", recentChat);
+  console.log("recentUser", recentUser);
 
   return (
     <Box className={style.leftSideBar}>
@@ -115,10 +116,11 @@ export const LeftSideBar = ({
                             setGroupChatActive(false);
                             setSingleChatActive(true);
                             setGroupJid("");
+                            // setUserJID(`${users.fromUserJid}`);
                             setUserJID(
                               `${
                                 users.fromUserId +
-                                "@xmpp-preprod-sandbox.mirrorfly.com"
+                                "@aegixglobal-xmpp.mirrorfly.com"
                               }`
                             );
                             // setUserJID(
@@ -160,12 +162,7 @@ export const LeftSideBar = ({
                           setGroupChatActive(false);
                           setSingleChatActive(true);
                           setGroupJid("");
-                          setUserJID(
-                            `${
-                              users.userId +
-                              "@xmpp-preprod-sandbox.mirrorfly.com"
-                            }`
-                          );
+                          setUserJID(`${users.userJid}`);
                         }}
                       >
                         {users.userId}

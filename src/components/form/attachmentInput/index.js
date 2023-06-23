@@ -11,6 +11,8 @@ export default function AttachmentInput(props) {
   const inputRef = React.useRef();
 
   const [source, setSource] = React.useState();
+  const [isDisplay, setIsDisplay] = React.useState(false);
+
   const [uploadFile, setUploadFile] = React.useState({
     src: "",
     type: "",
@@ -32,13 +34,13 @@ export default function AttachmentInput(props) {
     setSource(url);
     // event.target.value = null;
   };
-  console.log("---", uploadFile);
 
   const handleChoose = (event) => {
     inputRef.current.click();
   };
   const handleDelete = () => {
-    setUploadFile({});
+    setIsDisplay(true);
+    setUploadFile({ src: "", type: "", name: "" });
   };
   // useEffect(() => {
   //   setUploadFile({});
@@ -53,7 +55,7 @@ export default function AttachmentInput(props) {
         onChange={handleFileChange}
         accept=".mp4,.jpg,.png,.jpeg,.pdf,.doc,.xls,.csv,.ppt,.txt"
       />
-      {uploadFile && (
+      {uploadFile.name !== "" && (
         <Box className={style.imageWrapper}>
           <Box
             onClick={handleDelete}
