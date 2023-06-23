@@ -8,17 +8,22 @@ import SendMessage from "../ChatMessageComponents/sendMessage";
 import ReceivedMessage from "../ChatMessageComponents/receivedMessage";
 import SendMessageInput from "../InputComponent/SendMessageInput/index";
 import { useUserProfile } from "../../../helpers/user";
-const SingleChat = ({ userName, userJid }) => {
+import AttachmentInput from "../../form/attachmentInput";
+const SingleChat = ({ userName, userJid, isChatTpye }) => {
   const queryClient = useQueryClient();
-
+  const getUserJid = SDK.getJid(userJid);
+  // const getGroupId = SDK.getGroupJid(userJid);
   const formRef = React.useRef();
-  // useEffect(() => {
-  //   formRef.current.reset();
-  // }, [userName]);
   const currentUser = useUserProfile();
-  // const currentUserId= currentUser.userId;
-  // console.log("currentUserId",currentUser)
+  const [isFileUpload, setIsFileInput] = useState(false);
 
+  const [fileInput, setFileInput] = useState({
+    src: "",
+    type: "",
+    name: "",
+  });
+  // const allUserJid =
+  //   isChatTpye === "groupchat" ? getGroupId?.groupJid : getUserJid?.userJid;
   const handleMessage = async (event) => {
     event.preventDefault();
     const sendMessage = event.target.sendMessage.value;
@@ -64,13 +69,17 @@ const SingleChat = ({ userName, userJid }) => {
         {userMessgae &&
           userMessgae.reverse().map((chats) => {
             return currentUser?.userId === chats.fromUserId ? (
-              <SendMessage key={chats.nickName}
+              <SendMessage
+                key={chats.nickName}
                 sendMessage={chats.message}
                 nickName={chats.nickName}
                 utcTimestamp={chats.utcTimestamp}
               />
             ) : (
-              <ReceivedMessage key={chats.nickName} receivedMessage={chats.message} />
+              <ReceivedMessage
+                key={chats.nickName}
+                receivedMessage={chats.message}
+              />
             );
           })}
         <div ref={messagesEndRef} />
@@ -81,7 +90,13 @@ const SingleChat = ({ userName, userJid }) => {
           name={"sendMessage"}
           sx={{ position: "absolute", bottom: "0px", padding: "10px" }}
           onClick={handleMessage}
-        />
+        >
+          <AttachmentInput
+            jid={getUserJid}
+            setFileInput={setFileInput}
+            isFileUpload={isFileUpload}
+          />{" "}
+        </SendMessageInput>
       </form>
     </Box>
   );

@@ -5,18 +5,17 @@ import SDK from "../../../chatSDK";
 import ImageInput from "../InputComponent/ImageInput";
 
 const ProfileUpdate = () => {
-const [fileInput,setFileInput] = useState();
-console.log("fileInput",fileInput)
+  const [fileInput, setFileInput] = useState();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const values = event.target;
 
     const formData = new FormData();
-    formData.name = values.name.value
-    formData.image = fileInput
-    formData.status= values.status.value
-    formData.mobileNumber= values.mobileNumber.value
-    formData.email= values.email.value
+    formData.name = values.name.value;
+    formData.image = fileInput;
+    formData.status = values.status.value;
+    formData.mobileNumber = values.mobileNumber.value;
+    formData.email = values.email.value;
 
     const payload = {
       name: values.name.value,
@@ -25,7 +24,6 @@ console.log("fileInput",fileInput)
       mobileNumber: values.mobileNumber.value,
       email: values.email.value,
     };
-    console.log("payload",formData);
 
     const response = await SDK.setUserProfile(
       values.name.value,
@@ -35,7 +33,6 @@ console.log("fileInput",fileInput)
       values.email.value
       // formData
     );
-    console.log("response",response);
   };
   return (
     <SimpleGrid columns={2} spacing={10}>

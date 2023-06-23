@@ -48,149 +48,135 @@ export const LeftSideBar = ({
       return {
         // value: `${list.userJid + "@xmpp-preprod-sandbox.mirrorfly.com"}`,
         value: `${list.userJid}`,
-
         label: list.userId,
       };
     });
 
   const recentChat = async () => {
     const response = await SDK.getRecentChats();
-    console.log("response recent chat",response)
     return response.data;
   };
 
   const { data: recentUser } = useQuery("recentChat", recentChat);
-  console.log("recentUserData", recentUser);
-
 
   return (
     <Box className={style.leftSideBar}>
       <ChatProfile />
-      <Tabs >
+      <Tabs>
         <TabList>
-        <Tab  fontSize={"22px"} _selected={{ color: 'white', bg: '#00B6B4' }}><RxCounterClockwiseClock  /></Tab>
-        <Tab fontSize={"22px"} _selected={{ color: 'white', bg: '#00B6B4' }}><BsPeopleFill /></Tab>
+          <Tab fontSize={"22px"} _selected={{ color: "white", bg: "#00B6B4" }}>
+            <RxCounterClockwiseClock />
+          </Tab>
+          <Tab fontSize={"22px"} _selected={{ color: "white", bg: "#00B6B4" }}>
+            <BsPeopleFill />
+          </Tab>
         </TabList>
         <TabPanels>
           <TabPanel padding={"0px"}>
-          <Flex
-          className={style.chatListWrapper}
-        >
-          Groups
-          <AddGroup optionsValue={optionsValue} />
-        </Flex>
-        <GroupChat
-          groupChatActive={groupChatActive}
-          setGroupChatActive={setGroupChatActive}
-          setSingleChatActive={setSingleChatActive}
-          setUserJID={setUserJID}
-          setGroupJid={setGroupJid}
-          optionsValue={optionsValue}
-          setUserId={setUserId}
-          setGroupName={setGroupName}
-        />
-        <Box
-          borderBottom="1px solid rgb(236, 236, 236)"
-          padding="8px 10px"
-          background={"rgb(171 171 171)"}
-          color={"#fff"}
-          textAlign={"start"}
-        >
-          Chats
-        </Box>
-        <Flex flexDirection={"column-reverse"}>
-        {recentUser &&
-          recentUser.reverse().map((users) => {
-            return (
-              <div>
-                {users.chatType === "chat" && (
-                  <UserList
-                    key={users.fromUserId}
-                    active={
-                      users.fromUserId === userId && singleChatActive
-                        ? "rgb(236, 236, 236)"
-                        : ""
-                    }
-                    unreadCount={users.unreadCount}
-                    onClick={() => {
-                      setUserId(users.fromUserId);
-                      setGroupChatActive(false);
-                      setSingleChatActive(true);
-                      setGroupJid("");
-                      setUserJID(
-                        `${
-                          users.fromUserId + "@xmpp-preprod-sandbox.mirrorfly.com"
-                        }`
-                      );
-                      // setUserJID(
-                      //   users.userJid.includes(
-                      //     "@xmpp-preprod-sandbox.mirrorfly.com"
-                      //   )
-                      //     ? users.userJid
-                      //     : `${
-                      //         users.userJid +
-                      //         "@xmpp-preprod-sandbox.mirrorfly.com"
-                      //       }`
-                      // );
-                    }}
-                  >
-                    {users.fromUserId}
-                  </UserList>
-                )}
-              </div>
-            );
-          })}
-        </Flex>
-      
+            <Flex className={style.chatListWrapper}>
+              Groups
+              <AddGroup optionsValue={optionsValue} />
+            </Flex>
+            <GroupChat
+              groupChatActive={groupChatActive}
+              setGroupChatActive={setGroupChatActive}
+              setSingleChatActive={setSingleChatActive}
+              setUserJID={setUserJID}
+              setGroupJid={setGroupJid}
+              optionsValue={optionsValue}
+              setUserId={setUserId}
+              setGroupName={setGroupName}
+            />
+            <Box
+              borderBottom="1px solid rgb(236, 236, 236)"
+              padding="8px 10px"
+              background={"rgb(171 171 171)"}
+              color={"#fff"}
+              textAlign={"start"}
+            >
+              Chats
+            </Box>
+            <Flex flexDirection={"column-reverse"}>
+              {recentUser &&
+                recentUser.reverse().map((users, index) => {
+                  return (
+                    <div>
+                      {users.chatType === "chat" && (
+                        <UserList
+                          key={index}
+                          active={
+                            users.fromUserId === userId && singleChatActive
+                              ? "rgb(236, 236, 236)"
+                              : ""
+                          }
+                          unreadCount={users.unreadCount}
+                          onClick={() => {
+                            setUserId(users.fromUserId);
+                            setGroupChatActive(false);
+                            setSingleChatActive(true);
+                            setGroupJid("");
+                            setUserJID(
+                              `${
+                                users.fromUserId +
+                                "@xmpp-preprod-sandbox.mirrorfly.com"
+                              }`
+                            );
+                            // setUserJID(
+                            //   users.userJid.includes(
+                            //     "@xmpp-preprod-sandbox.mirrorfly.com"
+                            //   )
+                            //     ? users.userJid
+                            //     : `${
+                            //         users.userJid +
+                            //         "@xmpp-preprod-sandbox.mirrorfly.com"
+                            //       }`
+                            // );
+                          }}
+                        >
+                          {users.fromUserId}
+                        </UserList>
+                      )}
+                    </div>
+                  );
+                })}
+            </Flex>
           </TabPanel>
           <TabPanel padding={"0px"}>
-       <Flex flexDirection={"column-reverse"}>
-       {userList &&
-        userList?.reverse()?.map((users,index) => {
-          return (
-            <div>
-           
-                <UserList
-                  key={index}
-                  active={
-                    users.userId === userId && singleChatActive
-                      ? "rgb(236, 236, 236)"
-                      : ""
-                  }
-                  unreadCount={users.unreadCount}
-                  onClick={() => {
-                    setUserId(users.userId);
-                    setGroupChatActive(false);
-                    setSingleChatActive(true);
-                    setGroupJid("");
-                    setUserJID(
-                      `${
-                        users.userId + "@xmpp-preprod-sandbox.mirrorfly.com"
-                      }`
-                    );
-                    // setUserJID(
-                    //   users.userJid.includes(
-                    //     "@xmpp-preprod-sandbox.mirrorfly.com"
-                    //   )
-                    //     ? users.userJid
-                    //     : `${
-                    //         users.userJid +
-                    //         "@xmpp-preprod-sandbox.mirrorfly.com"
-                    //       }`
-                    // );
-                  }}
-                >
-                  {users.userId}
-                </UserList>
-          
-            </div>
-          );
-        })}
-        </Flex>
+            <Flex flexDirection={"column-reverse"}>
+              {userList &&
+                userList?.reverse()?.map((users, index) => {
+                  return (
+                    <div>
+                      <UserList
+                        key={index}
+                        active={
+                          users.userId === userId && singleChatActive
+                            ? "rgb(236, 236, 236)"
+                            : ""
+                        }
+                        unreadCount={users.unreadCount}
+                        onClick={() => {
+                          setUserId(users.userId);
+                          setGroupChatActive(false);
+                          setSingleChatActive(true);
+                          setGroupJid("");
+                          setUserJID(
+                            `${
+                              users.userId +
+                              "@xmpp-preprod-sandbox.mirrorfly.com"
+                            }`
+                          );
+                        }}
+                      >
+                        {users.userId}
+                      </UserList>
+                    </div>
+                  );
+                })}
+            </Flex>
           </TabPanel>
         </TabPanels>
       </Tabs>
-
     </Box>
   );
 };

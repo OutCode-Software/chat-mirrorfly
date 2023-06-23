@@ -18,7 +18,12 @@ const ChatList = () => {
         setGroupJid={setGroupJid}
         setGroupName={setGroupName}
       />
-      <RightSideBar groupName={groupName}  userName={userId} userJid={userJID} groupJid={groupJid} />
+      <RightSideBar
+        groupName={groupName}
+        userName={userId}
+        userJid={userJID}
+        groupJid={groupJid}
+      />
     </Flex>
   );
 };

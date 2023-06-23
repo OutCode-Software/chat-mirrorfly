@@ -18,9 +18,9 @@ import MultiSelect from "../InputComponent/MultiSelect/index";
 import SDK from "../../../chatSDK";
 import { HiUserGroup } from "react-icons/hi";
 import { useQueryClient } from "react-query";
-const AddGroup = ({ optionsValue,setGroupJid }) => {
+const AddGroup = ({ optionsValue, setGroupJid }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,12 +41,10 @@ const AddGroup = ({ optionsValue,setGroupJid }) => {
     });
 
     const response = await SDK.createGroup(groupName, results);
-    if(response.message === "Success")
-    {
-      queryClient.invalidateQueries('getGroupChat')
-            return onClose()
+    if (response.message === "Success") {
+      queryClient.invalidateQueries("getGroupChat");
+      return onClose();
     }
-    
 
     // return onClose()
     // const response =await SDK.createGroup(`${"groupName"}`, [`9860613518@xmpp-preprod-sandbox.mirrorfly.com', 'Anisha@xmpp-preprod-sandbox.mirrorfly.com', 'NIKEN@xmpp-preprod-sandbox.mirrorfly.com'`]);

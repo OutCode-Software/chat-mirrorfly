@@ -14,16 +14,15 @@ const GroupChat = ({
   setGroupName,
 }) => {
   const grouplist = useGroupChatList();
-  console.log("grouplist",grouplist)
   const [groupChatId, setGroupChatId] = useState("");
 
   return (
     <Flex flexDirection={"column-reverse"}>
-    {grouplist &&
+      {grouplist &&
         grouplist.reverse().map((group) => {
           return (
             <UserList
-            key={group.groupChatId}
+              key={group.groupChatId}
               active={
                 group.groupId === groupChatId && groupChatActive
                   ? "rgb(236, 236, 236)"

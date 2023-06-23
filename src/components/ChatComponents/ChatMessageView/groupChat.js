@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import NavbarChat from "../ChatList/navbarChat";
-import { Box } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import style from "./chatMessage.module.scss";
 import SDK from "../../../chatSDK";
 import { useQuery, useQueryClient } from "react-query";
@@ -8,18 +8,18 @@ import SendMessage from "../ChatMessageComponents/sendMessage";
 import ReceivedMessage from "../ChatMessageComponents/receivedMessage";
 import SendMessageInput from "../InputComponent/SendMessageInput/index";
 import { useUserProfile } from "../../../helpers/user";
-import { useDataUtc } from "../../../helpers/data";
+import AddParticipantGroup from "../AddParticipants";
+import RemoveParticipant from "../removeParticipant";
+// import { RemoveParticipant } from "../removeParticipant";
 const GroupChat = ({ groupJid, groupName }) => {
   const queryClient = useQueryClient();
-  console.log("groupJid",groupJid)
-
+  const toast = useToast();
   const formRef = React.useRef();
   const currentUser = useUserProfile();
   const handleMessage = async (event) => {
     event.preventDefault();
     const sendMessage = event.target.sendMessage.value;
     const response = await SDK.sendTextMessage(groupJid, sendMessage);
-    console.log("send msh", response);
 
     if (response.message === "Success") {
       queryClient.invalidateQueries("messageList");
@@ -31,7 +31,7 @@ const GroupChat = ({ groupJid, groupName }) => {
   const messageList = async () => {
     return await SDK.getChatMessages(groupJid);
   };
-  const { data } = useQuery(["messageList",groupJid], messageList);
+  const { data } = useQuery(["messageList", groupJid], messageList);
   //  const reverseData = data?.data.reverse()
   const userMessgae =
     data?.data &&
@@ -46,13 +46,37 @@ const GroupChat = ({ groupJid, groupName }) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const deleteGroup = async () => {
+    await SDK.userDeleteGroup(groupJid);
+    queryClient.invalidateQueries("getGroupChat");
+    toast({
+      title: "Group has been deleted",
+      position: "top-right",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+  const profileMenu = [
+    {
+      name: <AddParticipantGroup groupJid={groupJid} groupName={groupName} />,
+    },
+    {
+      name: <RemoveParticipant groupName={groupName} groupJid={groupJid} />,
+    },
+    {
+      name: "Delete Group",
+      onClick: deleteGroup,
+    },
+  ];
   scrollToBottom();
   if (!groupJid) {
     return <div></div>;
   }
   return (
     <Box className={style.singleMessageContainer}>
-      <NavbarChat userName={groupName} />
+      <NavbarChat userName={groupName} profileMenu={profileMenu} />
       {groupJid}
       <Box className={style.rightSideChatContainer}>
         {userMessgae &&
