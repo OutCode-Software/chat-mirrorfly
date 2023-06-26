@@ -1,70 +1,31 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
 ### `npm start`
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in the browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### `.env`
+1. REACT_APP_BASE_URL_MIRRORFLY for the url of mirrorfly
+2. REACT_APP_LICENSE_KEY = license key of mirrorfly
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+### `How It Works`
+1. Chat SDK declaration (file:chatsdk.js)
+   * The const SDK line declares a constant variable named SDK.
+   * window.SDK is used to access a property called SDK on the window
+   * The value of window.SDK is assigned to the SDK variable, effectively creating a new variable that references the same value.
+   * Finally, export default SDK; exports the SDK variable as the default export of the module.
+2. Initialize Chat SDK (file: connection.js)
+   * Several callback listener functions are defined: connectionListener, friendsListListener, userProfileListener, and groupMsgInfoListener. These functions are responsible for handling different types of events or responses received from the chat SDK.
+   * The useInitialize function is declared as an async function. It will be used as a custom hook in a React component to initialize the chat SDK.
+   * Inside the useInitialize function, the baseUrl and licenseKey are retrieved from environment variables using process.env. These variables are expected to contain the base URL of the chat service (REACT_APP_BASE_URL_MIRRORFLY) and the license key (REACT_APP_LICENSE_KEY).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Connection to the chat SDK (file:connectServer.js)
+   * The localStorage object is used to retrieve the "login" item, which is expected to contain the user's login information stored as a JSON string.
+   * The SDK.connect method is called with two arguments: the username and password obtained from the user object.
+   * The response received from the SDK.connect method is stored in the response variable.
+   * The localStorage.setItem method is used to store the response.message (which may contain a login status message) in the "loginStatus" item in the browser's local storage.
+   * The useConnectServer hook does not return anything, as it is primarily focused on performing the connection to the chat server and handling the login process.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `Acknowledgments`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   Mirrofly Documentation React Js for chat :- https://www.mirrorfly.com/docs/chat/react/v2/quick-start/
